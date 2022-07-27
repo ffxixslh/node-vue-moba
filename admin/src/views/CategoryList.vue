@@ -22,7 +22,7 @@ const { proxy } = getCurrentInstance();
 let items = ref([])
 
 async function fetch() {
-  const res = await proxy.$http.get('categories')
+  const res = await proxy.$http.get('rest/categories')
   items.value = res.data //用ref的话需要用value来访问
   console.log("List Data:",res.data);
 }
@@ -38,7 +38,7 @@ async function remove(row) {
     }
   )
     .then(async () => {
-      const res = await proxy.$http.delete(`categories/${row._id}`)
+      const res = await proxy.$http.delete(`rest/categories/${row._id}`)
       ElMessage({
         type: 'success',
         message: '删除成功',

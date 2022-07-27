@@ -6,8 +6,9 @@ export const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("./views/index.vue"),
+      component: () => import("./views/Main.vue"),
       children: [
+        // 分类
         {
           path: "/categories/create",
           component: () => import("./views/CategoryEdit.vue"),
@@ -21,12 +22,35 @@ export const router = createRouter({
           path: "/categories/list",
           component: () => import("./views/CategoryList.vue"),
         },
+        // 物品
+        {
+          path: "/items/create",
+          component: () => import("./views/ItemEdit.vue"),
+        },
+        {
+          path: "/items/edit/:id",
+          component: () => import("./views/ItemEdit.vue"),
+          props: true,
+        },
+        {
+          path: "/items/list",
+          component: () => import("./views/ItemList.vue"),
+        },
+        // 英雄
+        {
+          path: "/heros/create",
+          component: () => import("./views/HeroEdit.vue"),
+        },
+        {
+          path: "/heros/edit/:id",
+          component: () => import("./views/HeroEdit.vue"),
+          props: true,
+        },
+        {
+          path: "/heros/list",
+          component: () => import("./views/HeroList.vue"),
+        },
       ],
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () => import("./views/about.vue"),
     },
   ],
 });

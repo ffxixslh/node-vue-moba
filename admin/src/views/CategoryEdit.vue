@@ -4,7 +4,7 @@
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="上级分类">
         <el-select v-model="state.model.parent">
-          <el-option v-for="item in state.parents" :key="item._id" :label="item.name" :value="item._id"></el-option>
+          <el-option v-for="item in state.parents" :key="item._id" :label="item.name" :value="item._id"/>
         </el-select>
       </el-form-item>
       <el-form-item label="名称">
@@ -34,9 +34,9 @@ const state = reactive({
 async function save() {
   let res;
   if (props.id) {
-    res = await proxy.$http.put(`categories/${props.id}`, state.model)
+    res = await proxy.$http.put(`rest/categories/${props.id}`, state.model)
   } else {
-    res = await proxy.$http.post('categories', state.model)
+    res = await proxy.$http.post('rest/categories', state.model)
   }
   proxy.$router.push('/categories/list')
   ElMessage({
@@ -46,15 +46,13 @@ async function save() {
 }
 
 async function fetch() {
-  const res = await proxy.$http.get(`categories/${props.id}`)
+  const res = await proxy.$http.get(`rest/categories/${props.id}`)
   state.model = res.data
-  console.log(state.model);
 }
 
 async function fetchParentOptions() {
-  const res = await proxy.$http.get(`categories`)
+  const res = await proxy.$http.get(`rest/categories`)
   state.parents = res.data
-  console.log(state.model);
 }
 
 onMounted(() => {
