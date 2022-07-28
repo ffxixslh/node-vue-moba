@@ -15,22 +15,36 @@
   -webkit-text-size-adjust: 100%;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+
+.avatar-uploader-icon {
+  min-width: 5rem;
+  height: 5rem;
+  font-size: 28px;
+  color: #8c939d;
+  line-height: 178px;
   text-align: center;
+}
+
+.avatar {
+  min-width: 5rem;
+  height: 5rem;
+  display: block;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }

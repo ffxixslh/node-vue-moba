@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>英雄列表</h1>
     <el-table :data="items" style="width: 100%">
       <el-table-column prop="_id" label="ID" width="230"></el-table-column>
       <el-table-column prop="name" label="英雄名称"></el-table-column>
@@ -9,7 +10,7 @@
           <img :src="scope.row.avatar" style="height: 3rem" />
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="Operations" width="180">
+      <el-table-column fixed="right" label="操作" width="180">
         <template #default="scope">
           <el-button link type="primary" size="small" @click="proxy.$router.push(`/heros/edit/${scope.row._id}`)">
             编辑</el-button>

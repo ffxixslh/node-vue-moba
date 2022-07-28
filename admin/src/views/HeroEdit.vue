@@ -166,32 +166,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  width: 5rem;
-  height: 5rem;
-  overflow: hidden;
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-
-.avatar-uploader-icon {
-  width: 5rem;
-  height: 5rem;
-  font-size: 28px;
-  color: #8c939d;
-  line-height: 178px;
-  text-align: center;
-}
-
-.avatar {
-  width: 5rem;
-  height: 5rem;
-  display: block;
-}
 </style>

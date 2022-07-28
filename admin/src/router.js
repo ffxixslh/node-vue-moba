@@ -50,6 +50,34 @@ export const router = createRouter({
           path: "/heros/list",
           component: () => import("./views/HeroList.vue"),
         },
+        // 文章
+        {
+          path: "/articles/create",
+          component: () => import("./views/ArticleEdit.vue"),
+        },
+        {
+          path: "/articles/edit/:id",
+          component: () => import("./views/ArticleEdit.vue"),
+          props: true,
+        },
+        {
+          path: "/articles/list",
+          component: () => import("./views/ArticleList.vue"),
+        },
+        // 广告位
+        {
+          path: "/ads/create",
+          component: () => import("./views/AdEdit.vue"),
+        },
+        {
+          path: "/ads/edit/:id",
+          component: () => import("./views/AdEdit.vue"),
+          props: true,
+        },
+        {
+          path: "/ads/list",
+          component: () => import("./views/AdList.vue"),
+        },
       ],
     },
   ],
