@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/Login.vue")
+    },
+    {
       path: "/",
-      name: "home",
+      name: "main",
       component: () => import("./views/Main.vue"),
       children: [
         // 分类
@@ -78,7 +83,26 @@ export const router = createRouter({
           path: "/ads/list",
           component: () => import("./views/AdList.vue"),
         },
+        // 管理员
+        {
+          path: "/admin_users/create",
+          component: () => import("./views/AdminUserEdit.vue"),
+        },
+        {
+          path: "/admin_users/edit/:id",
+          component: () => import("./views/AdminUserEdit.vue"),
+          props: true,
+        },
+        {
+          path: "/admin_users/list",
+          component: () => import("./views/AdminUserList.vue"),
+        },
       ],
+    },
+    {
+      name: "404",
+      path: "/:catchAll(.*)",
+      component: () => import("./views/404.vue"),
     },
   ],
 });

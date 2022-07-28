@@ -13,5 +13,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$router = router;
+// app.config.globalProperties.$message = ElementPlus.ElMessage; // TODO:全局消息提示功能挂载
 app.use(ElementPlus).use(router);
 app.mount("#app");
