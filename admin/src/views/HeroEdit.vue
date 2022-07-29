@@ -11,8 +11,8 @@
             <el-input v-model="state.model.title"></el-input>
           </el-form-item>
           <el-form-item label="头像">
-            <el-upload class="avatar-uploader" :action="proxy.$http.defaults.baseURL + '/upload'"
-              :show-file-list="false" :on-success="afterUpload">
+            <el-upload class="avatar-uploader" :action="uploadUrl"
+              :headers="Authorization" :show-file-list="false" :on-success="afterUpload">
               <img v-if="state.model.avatar" :src="state.model.avatar" class="avatar" />
               <el-icon v-else class="el-icon-plus avatar-uploader-icon">
                 <Plus />
@@ -69,8 +69,8 @@
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
               <el-form-item label="图标">
-                <el-upload class="avatar-uploader" :action="proxy.$http.defaults.baseURL + '/upload'"
-                  :show-file-list="false" :on-success="res => item.icon = res.url">
+                <el-upload class="avatar-uploader" :action="uploadUrl"
+                  :headers="Authorization" :show-file-list="false" :on-success="res => item.icon = res.data.url">
                   <img v-if="item.icon" :src="item.icon" class="avatar" />
                   <el-icon v-else class="el-icon-plus avatar-uploader-icon">
                     <Plus />
@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, onMounted } from "vue";
+import { ref, reactive, getCurrentInstance, onMounted, computed } from "vue";
 import { ElMessage } from "element-plus";
 const { proxy } = getCurrentInstance();
 
@@ -124,14 +124,22 @@ const state = reactive({
   items: [],
 });
 
+const uploadUrl = computed(() => {
+  return `${proxy.$http.defaults.baseURL}/upload`
+})
+
+const Authorization = {
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+}
+
 function afterUpload(res) {
-  state.model.avatar = res.url;
+  console.log(res)
+  state.model.avatar = res.data.url;
 }
 
 async function save() {
   let res;
   if (props.id) {
-    console.log(state.model);
     res = await proxy.$http.put(`rest/heros/${props.id}`, state.model);
   } else {
     res = await proxy.$http.post("rest/heros", state.model);

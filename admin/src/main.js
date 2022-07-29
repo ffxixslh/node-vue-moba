@@ -1,9 +1,9 @@
 import { createApp } from "vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import './style.css';
+import "./style.css";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-import { router } from "./router";
+import router from "./router";
 import http from "./http";
 import App from "./App.vue";
 
@@ -13,6 +13,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$router = router;
-// app.config.globalProperties.$message = ElementPlus.ElMessage; // TODO:全局消息提示功能挂载
 app.use(ElementPlus).use(router);
 app.mount("#app");

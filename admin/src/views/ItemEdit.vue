@@ -6,8 +6,8 @@
         <el-input v-model="state.model.name"></el-input>
       </el-form-item>
       <el-form-item label="图标">
-        <el-upload class="avatar-uploader" :action="proxy.$http.defaults.baseURL + '/upload'" :show-file-list="false"
-          :on-success="afterUpload">
+        <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false"
+          :headers="Authorization" :on-success="afterUpload">
           <img v-if="state.model.icon" :src="state.model.icon" class="avatar" />
           <el-icon v-else class="el-icon-plus avatar-uploader-icon">
             <Plus />
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, onMounted, toRefs } from "vue";
+import { ref, reactive, getCurrentInstance, onMounted, computed } from "vue";
 import { ElMessage } from "element-plus";
 const { proxy } = getCurrentInstance();
 
@@ -34,8 +34,16 @@ const state = reactive({
   model: {},
 });
 
+const uploadUrl = computed(() => {
+  return `${proxy.$http.defaults.baseURL}/upload`
+})
+
+const Authorization = {
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+};
+
 function afterUpload(res) {
-  state.model.icon = res.url;
+  state.model.icon = res.data.url;
 }
 
 async function save() {

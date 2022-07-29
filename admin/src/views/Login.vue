@@ -31,7 +31,9 @@ const state = reactive({
 
 async function login() {
   const res = await proxy.$http.post('login', state.model)
-  console.log(res.data);
+  localStorage.setItem('token', res.data.token);
+  proxy.$router.push('/');
+  ElMessage.success('登录成功');
 }
 
 </script>

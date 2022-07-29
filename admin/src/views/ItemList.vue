@@ -29,7 +29,6 @@ let items = ref([]);
 async function fetch() {
   const res = await proxy.$http.get("rest/items");
   items.value = res.data; //用ref的话需要用value来访问
-  console.log("List Data:", res.data);
 }
 
 async function remove(row) {
