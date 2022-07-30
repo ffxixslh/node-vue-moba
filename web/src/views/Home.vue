@@ -1,6 +1,8 @@
 <template>
   <div>
     <swiper
+      class="swiper-container"
+      :modules="swiper_options.modules"
       :autoplay="swiper_options.autoplay"
       :loop="swiper_options.loop"
       :speed="swiper_options.speed"
@@ -18,6 +20,37 @@
         <img class="w-100" src="../assets/images/3.jpeg" alt="" />
       </swiper-slide>
     </swiper>
+    <!-- end of swiper -->
+    <div class="nav-icons bg-white mt-3 text-center pt-3 text-gray-1">
+      <div class="d-flex flex-wrap">
+        <div class="nav-item mb-4 pt-2" v-for="i in 10" :key="i">
+          <i class="sprite sprite-news pt-1"></i>
+          <div class="pb-1 fs-sm">爆料站</div>
+        </div>
+      </div>
+      <div class="bg-light py-2 fs-sm d-flex ai-center jc-center">
+        <i class="sprite sprite-arrow mr-1"></i>
+        收起
+      </div>
+    </div>
+    <!-- end of nav-icons -->
+    <m-list-card
+      icon="cc-menu-circle"
+      title="新闻资讯"
+      :categories="state.newsCats"
+    >
+    <template #items="{category}">
+      <div v-for="(news, index) in category.newsList" :key="index">
+        <span>[{{news.categoryName}}]</span>
+        <span>|</span>
+        <span>{{news.title}}</span>
+        <span>{{news.date}}</span>
+      </div>
+    </template>
+    </m-list-card>
+    <m-card icon="cc-menu-circle" title="英雄列表"></m-card>
+    <m-card icon="cc-menu-circle" title="精彩视频"></m-card>
+    <m-card icon="cc-menu-circle" title="百态王者"></m-card>
   </div>
 </template>
 
@@ -27,9 +60,11 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperCore, { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+
 SwiperCore.use([Autoplay, Pagination]);
 
 let swiper_options = reactive({
+  modules: [Pagination],
   autoplay: {
     disableOnInteraction: false, // 鼠标滑动后继续自动播放
     delay: 3000, //3秒切换一次
@@ -40,10 +75,99 @@ let swiper_options = reactive({
   centeredSlides: true, //设置slide居中
   spaceBetween: 0,
   pagination: {
-    type: "bullets",
     clickable: true,
+    renderBullet: function (index, className) {
+      return `<span class='${className}'></span>`;
+    },
   },
 });
+
+const state = reactive({
+  newsCats: [
+    {
+      name: "热门",
+      newsList: new Array(5).fill(1).map((v) => ({
+        categoryName: "公告",
+        title: "7月29日全服不停机更新公告",
+        date: "07/29",
+      })),
+    },
+    {
+      name: "新闻",
+      newsList: new Array(5).fill(1).map((v) => ({
+        categoryName: "新闻",
+        title: "7月29日全服不停机更新公告",
+        date: "07/29",
+      })),
+    },
+    {
+      name: "热门",
+      newsList: new Array(5).fill(1).map((v) => ({
+        categoryName: "公告",
+        title: "7月29日全服不停机更新公告",
+        date: "07/29",
+      })),
+    },
+    {
+      name: "热门",
+      newsList: new Array(5).fill(1).map((v) => ({
+        categoryName: "公告",
+        title: "7月29日全服不停机更新公告",
+        date: "07/29",
+      })),
+    },
+    {
+      name: "热门",
+      newsList: new Array(5).fill(1).map((v) => ({
+        categoryName: "公告",
+        title: "7月29日全服不停机更新公告",
+        date: "07/29",
+      })),
+    },
+  ],
+});
+
+console.log(state.newsCats);
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "../assets/sass/variables";
+
+.swiper-container {
+  .swiper-pagination {
+    text-align: right !important;
+    padding: 0 1rem 0.5rem 0;
+
+    .swiper-pagination-bullet {
+      width: 0.68rem;
+      height: 0.68rem;
+      display: inline-block;
+      margin-right: 0.4rem;
+      line-height: 999px;
+      overflow: hidden;
+      border-radius: 2px;
+      background: #ffffff;
+      opacity: 1;
+    }
+    .swiper-pagination-bullet-active {
+      background: #4b67af;
+    }
+  }
+}
+
+.nav-icons {
+  .nav-item {
+    width: 25%;
+    border-right: 0.1rem solid $border-color;
+    &:nth-child(4n) {
+      border-right: none;
+    }
+  }
+}
+
+.card {
+  .card-header {
+    border-bottom: 1px solid $border-color;
+  }
+}
+</style>

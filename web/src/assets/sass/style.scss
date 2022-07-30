@@ -35,7 +35,7 @@ a {
 // text-align
 @each $var in (left, center, right) {
   .text-#{$var} {
-    text-align: $var;
+    text-align: $var !important;
   }
 }
 
@@ -69,6 +69,10 @@ a {
 
 .flex-grow-1 {
   flex-grow: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 @each $key, $value in $flex-jc {
@@ -118,29 +122,55 @@ a {
   }
 }
 
-// topbar
-.topbar {
-  background-image: url("../images/topbar-bg.png");
-}
-
 // button
 .btn {
+  height: 1.85rem;
   border: none;
   border-radius: 0.154rem;
   font-size: map-get($font-sizes, "sm") * $base-font-size;
-  padding: 0.2rem 0.6rem;
+  padding: 0.1rem 0.6rem;
 }
 
 // nav
 .nav {
+  display: flex;
   .nav-item {
     border-bottom: 3px solid transparent;
     padding-bottom: 0.2rem;
     &.active {
-      border-bottom: 3.5px solid #f1f1f1;
+      color: map-get($map: $colors, $key: "primary");
+      border-bottom-color: map-get($map: $colors, $key: "primary");
     }
-    a {
+    .nav-link {
       text-decoration: none;
     }
+  }
+  &.nav-inverse {
+    .nav-item {
+      color: map-get($map: $colors, $key: "white");
+      &.active {
+        border-bottom-width: 3.5px;
+        border-bottom-color: map-get($map: $colors, $key: "white");
+      }
+    }
+  }
+}
+
+// sprite
+.sprite {
+  background: url("../images/index.png") no-repeat 0 0;
+  background-size: 28.8462rem;
+  display: inline-block;
+  &.sprite-news {
+    background: url("../images/index.png") no-repeat 63.546% 15.517%;
+    background-size: 375px 455px;
+    width: 23px;
+    height: 20px;
+  }
+  &.sprite-arrow {
+    background: url("../images/index.png") no-repeat 38.577% 52.076%;
+    background-size: 375px 455px;
+    width: 10px;
+    height: 10px;
   }
 }
