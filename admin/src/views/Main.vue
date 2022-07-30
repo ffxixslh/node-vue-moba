@@ -2,12 +2,15 @@
   <el-container class="layout-container-demo" style="height: 100vh">
     <el-aside width="200px">
       <el-scrollbar>
-        <el-menu router :default-openeds="['3']" unique-opened default-active="proxy.$router.path" >
+        <el-menu
+          router
+          :default-openeds="['3']"
+          unique-opened
+          default-active="proxy.$router.path"
+        >
           <el-sub-menu index="1">
             <template #title>
-              <el-icon>
-                <message></message>
-              </el-icon>内容管理
+              <el-icon> <message></message> </el-icon>内容管理
             </template>
             <el-menu-item-group>
               <template #title>物品</template>
@@ -28,9 +31,7 @@
 
           <el-sub-menu index="2">
             <template #title>
-              <el-icon>
-                <Stopwatch />
-              </el-icon>运营管理
+              <el-icon> <Stopwatch /> </el-icon>运营管理
             </template>
             <el-menu-item-group>
               <template #title>广告位</template>
@@ -41,9 +42,7 @@
 
           <el-sub-menu index="3">
             <template #title>
-              <el-icon>
-                <Setting />
-              </el-icon>系统设置
+              <el-icon> <Setting /> </el-icon>系统设置
             </template>
             <el-menu-item-group>
               <template #title>分类</template>
@@ -52,7 +51,9 @@
             </el-menu-item-group>
             <el-menu-item-group>
               <template #title>管理员</template>
-              <el-menu-item index="/admin_users/create">新建管理员</el-menu-item>
+              <el-menu-item index="/admin_users/create"
+                >新建管理员</el-menu-item
+              >
               <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
@@ -79,7 +80,7 @@
       </el-header>
       <el-main>
         <el-scrollbar>
-          <router-view></router-view>
+          <router-view :key="route.path"></router-view>
         </el-scrollbar>
       </el-main>
     </el-container>
@@ -87,8 +88,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { Menu as IconMenu, Message, Setting } from "@element-plus/icons-vue";
+import { useRoute } from "vue-router";
+import { Menu, Message, Setting } from "@element-plus/icons-vue";
+
+// setup 中用 useRoute 获取路由地址
+const route = useRoute();
 </script>
 
 <style scoped>
