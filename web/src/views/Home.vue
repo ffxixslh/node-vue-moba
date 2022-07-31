@@ -39,14 +39,18 @@
       title="新闻资讯"
       :categories="state.newsCats"
     >
-    <template #items="{category}">
-      <div v-for="(news, index) in category.newsList" :key="index">
-        <span>[{{news.categoryName}}]</span>
-        <span>|</span>
-        <span>{{news.title}}</span>
-        <span>{{news.date}}</span>
-      </div>
-    </template>
+      <template #items="{ category }">
+        <div
+          class="d-flex fs-lg py-2"
+          v-for="(news, index) in category.newsList"
+          :key="index"
+        >
+          <span class="text-gray">[{{ news.categoryName }}]</span>
+          <span class="mx-1 text-gray">|</span>
+          <span class="flex-1 text-dark">{{ news.title }}</span>
+          <span>{{ news.createdAt }}</span>
+        </div>
+      </template>
     </m-list-card>
     <m-card icon="cc-menu-circle" title="英雄列表"></m-card>
     <m-card icon="cc-menu-circle" title="精彩视频"></m-card>
@@ -55,7 +59,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, getCurrentInstance, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperCore, { Autoplay, Pagination } from "swiper";
 import "swiper/css";
@@ -82,52 +86,21 @@ let swiper_options = reactive({
   },
 });
 
+const { proxy } = getCurrentInstance();
+
 const state = reactive({
-  newsCats: [
-    {
-      name: "热门",
-      newsList: new Array(5).fill(1).map((v) => ({
-        categoryName: "公告",
-        title: "7月29日全服不停机更新公告",
-        date: "07/29",
-      })),
-    },
-    {
-      name: "新闻",
-      newsList: new Array(5).fill(1).map((v) => ({
-        categoryName: "新闻",
-        title: "7月29日全服不停机更新公告",
-        date: "07/29",
-      })),
-    },
-    {
-      name: "热门",
-      newsList: new Array(5).fill(1).map((v) => ({
-        categoryName: "公告",
-        title: "7月29日全服不停机更新公告",
-        date: "07/29",
-      })),
-    },
-    {
-      name: "热门",
-      newsList: new Array(5).fill(1).map((v) => ({
-        categoryName: "公告",
-        title: "7月29日全服不停机更新公告",
-        date: "07/29",
-      })),
-    },
-    {
-      name: "热门",
-      newsList: new Array(5).fill(1).map((v) => ({
-        categoryName: "公告",
-        title: "7月29日全服不停机更新公告",
-        date: "07/29",
-      })),
-    },
-  ],
+  newsCats: [],
 });
 
-console.log(state.newsCats);
+async function fetchNewsCats() {
+  let res = await proxy.$http.get("/news/list");
+  // console.log("newsCats:",res);
+  state.newsCats = res.data;
+}
+
+onMounted(() => {
+  fetchNewsCats();
+});
 </script>
 
 <style lang="scss">
