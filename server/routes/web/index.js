@@ -32,5 +32,53 @@ module.exports = (app) => {
     res.send(newsList);
   });
 
+  router.get("/news/list", async (req, res) => {
+    const parent = await Category.findOne({ name: "新闻分类" });
+    const cats = await Category.aggregate([
+      { $match: { parent: parent._id } },
+      {
+        $lookup: {
+          from: "articles",
+          localField: "_id",
+          foreignField: "categories",
+          as: "newsList",
+        },
+      },
+      {
+        $addFields: {
+          newsList: { $slice: ["$newsList", 5] },
+        },
+      },
+    ]);
+
+    const subCats = cats.map((v) => v._id);
+    cats.unshift({
+      name: "热门",
+      newsList: await Article.find()
+        .where({ categories: { $in: subCats } })
+        .limit(5)
+        .populate("categories")
+        .lean(),
+    });
+
+    cats.map((cat) => {
+      cat.newsList.map((news) => {
+        /**
+         * 现在官网已经存在“热门”标签，所以对每条news判断是否存在“公告”分类，
+         * 如果有就显示“公告”，否则显示“热门”
+         */
+        let isNotice;
+        news.categories.forEach((category) => {
+          noticeFlag = category.name == "公告" ? true : false;
+          isNotice = isNotice || noticeFlag
+        });
+        news.categoryName = isNotice ? "公告" : cat.name;
+        return news;
+      });
+    });
+
+    res.send(cats);
+  });
+
   app.use("/web/api", router);
 };
