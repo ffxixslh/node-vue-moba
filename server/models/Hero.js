@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
   name: { type: String },
   avatar: { type: String },
+  banner: { type: String },
   title: { type: String },
   categories: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Category" }],
   scores: {
@@ -15,6 +16,8 @@ const schema = new mongoose.Schema({
     {
       icon: { type: String },
       name: { type: String },
+      delay: { type: String },
+      cost: { type: Number },
       description: { type: String },
       tips: { type: String },
     },
@@ -32,4 +35,4 @@ const schema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("Hero", schema);
+module.exports = mongoose.model("Hero", schema, "heroes");

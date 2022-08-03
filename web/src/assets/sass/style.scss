@@ -22,6 +22,10 @@ a {
   color: #999999;
 }
 
+p {
+  line-height: 1.5rem;
+}
+
 @each $colorKey, $color in $colors {
   .text-#{$colorKey} {
     color: $color;
@@ -129,6 +133,24 @@ a {
   border-radius: 0.154rem;
   font-size: map-get($font-sizes, "sm") * $base-font-size;
   padding: 0.1rem 0.6rem;
+  text-decoration: none;
+  &.btn-lg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      color: map-get($map: $colors, $key: "primary");
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin: 0 1rem;
+    }
+    border: 1px solid map-get($map: $colors, $key: "light-2");
+    border-radius: 0.6rem;
+    background: map-get($map: $colors, $key: "white-1");
+    padding: 1.5rem 1rem;
+    font-size: map-get($map: $font-sizes, $key: "lg") * $base-font-size;
+    color: map-get($map: $colors, $key: "dark-1");
+  }
 }
 
 // nav
@@ -172,5 +194,61 @@ a {
     background-size: 375px 455px;
     width: 10px;
     height: 10px;
+  }
+}
+
+// text ellipsis
+.text-ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// borders
+@each $dir in (top, right, bottom, left) {
+  .border-#{$dir} {
+    border-#{$dir}: 1px solid $border-color;
+  }
+}
+
+@each $row in (9, 8, 7, 6, 5, 4, 3, 2, 1, 0) {
+  @each $col in (3, 2, 1, 0) {
+    .hero-attr-#{$col}-#{$row} {
+      background: url("../images/hero-attrsp.png")
+        no-repeat
+        (-$attr-base-size * $col)
+        (-$attr-base-size * $row);
+      background-size: 10rem 11.25rem;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
+.video-item {
+  &:last-child{
+    border-bottom: none;
+  }
+  .video-mask {
+    display: block;
+    position: absolute;
+    top: 25%;
+    left: 37.5%;
+    width: 100%;
+    height: 100%;
+    background: url(https://game.gtimg.cn/images/yxzj/m/m201706/images/herodetail/video-img.png)
+      no-repeat;
+    background-size: 2.5rem 2.5rem;
+  }
+  .video-views {
+    background: url("../images/index.png") no-repeat 32.369% 52.578%;
+    background-size: 375px 455px;
+    width: 12px;
+    height: 9px;
   }
 }

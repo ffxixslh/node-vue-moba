@@ -1,15 +1,15 @@
 import { createApp } from "vue";
-import "./assets/sass/style.scss";
-import "./assets/iconfont/iconfont.css";
+import "@/assets/sass/style.scss";
+import "@/assets/iconfont/iconfont.css";
 import router from "@/router.js";
 import axios from "axios";
-import App from "./App.vue";
+import App from "@/App.vue";
 import Card from "@/components/Card.vue";
 import ListCard from "@/components/ListCard.vue";
 
 const app = createApp(App);
 app.config.globalProperties.$http = axios.create({
-  baseURL: 'http://localhost:3000/web/api'
+  baseURL: "http://localhost:3000/web/api",
 });
 
 app.component("m-card", Card);

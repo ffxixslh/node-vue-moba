@@ -1,7 +1,7 @@
 <template>
   <div>
     <m-card :icon="icon" :title="title">
-      <div class="nav jc-between pb-3">
+      <div class="nav jc-between pb-3 text-dark-1">
         <div
           v-for="(category, index) in categories"
           :key="index"
@@ -13,7 +13,12 @@
         </div>
       </div>
       <div class="pt-1">
-        <swiper @swiper="onSwiper" @slideChange="onSlideChange">
+        <swiper
+          autoHeight
+          :space-between="10"
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+        >
           <swiper-slide v-for="(category, index) in categories" :key="index">
             <slot name="items" :category="category"></slot>
           </swiper-slide>

@@ -40,19 +40,87 @@
       :categories="state.newsCats"
     >
       <template #items="{ category }">
-        <div
+        <router-link
+          :to="`/articles/${news._id}`"
           class="d-flex fs-lg py-2"
+          style="overflow: hidden; height: fix-content; margin-bottom: 0.3rem; text-decoration: none;"
           v-for="(news, index) in category.newsList"
           :key="index"
         >
-          <span class="text-gray">[{{ news.categoryName }}]</span>
-          <span class="mx-1 text-gray">|</span>
-          <span class="flex-1 text-dark">{{ news.title }}</span>
-          <span>{{ news.createdAt }}</span>
+          <span
+            class="text-red mr-1 fs-sm"
+            style="
+              border: 1px solid red;
+              border-radius: 2px;
+              padding: 0.05rem 0.1rem;
+              margin: 0 0.1rem;
+              vertical-align: bottom;
+            "
+            >{{ news.categoryName }}</span
+          >
+          <!-- <span class="mx-1 text-gray">|</span> -->
+          <span
+            class="flex-1 text-dark fs-lg mx-1 text-ellipsis"
+            style="width: 5rem; vertical-align: base-line"
+            >{{ news.title }}</span
+          >
+          <span class="fs-sm text-gray-1 px-1">{{
+            dayjs(news.createdAt).format("MM/DD")
+          }}</span>
+        </router-link>
+      </template>
+    </m-list-card>
+
+    <m-list-card
+      icon="yingxiongxiangqing"
+      title="英雄列表"
+      :categories="state.heroCats"
+    >
+      <template #items="{ category }">
+        <div class="d-flex flex-wrap" style="margin: 0 -0.5rem;">
+          <router-link :to="`/heroes/${hero._id}`" class="p-2 text-center" v-for="hero in category.heroList" style="width: 20%; text-decoration: none;">
+            <img :src="hero.avatar" class="w-100" style="border-radius: 0 0.5rem 0 0.5rem">
+            <div class="text-dark fs-sm">{{ hero.name }}</div>
+          </router-link>
         </div>
       </template>
     </m-list-card>
-    <m-card icon="cc-menu-circle" title="英雄列表"></m-card>
+
+    <m-list-card
+      icon="shipin"
+      title="精彩视频"
+      :categories="state.newsCats"
+    >
+      <template #items="{ category }">
+        <div
+          class="d-flex fs-lg py-2"
+          style="overflow: hidden; height: fix-content; margin-bottom: 0.3rem"
+          v-for="(news, index) in category.newsList"
+          :key="index"
+        >
+          <span
+            class="text-red mr-1 fs-sm"
+            style="
+              border: 1px solid red;
+              border-radius: 2px;
+              padding: 0.05rem 0.1rem;
+              margin: 0 0.1rem;
+              vertical-align: bottom;
+            "
+            >{{ news.categoryName }}</span
+          >
+          <!-- <span class="mx-1 text-gray">|</span> -->
+          <span
+            class="flex-1 text-dark fs-lg mx-1 text-ellipsis"
+            style="width: 5rem; vertical-align: base-line"
+            >{{ news.title }}</span
+          >
+          <span class="fs-sm text-gray-1 px-1">{{
+            dayjs(news.createdAt).format("MM/DD")
+          }}</span>
+        </div>
+      </template>
+    </m-list-card>
     <m-card icon="cc-menu-circle" title="精彩视频"></m-card>
     <m-card icon="cc-menu-circle" title="百态王者"></m-card>
   </div>
@@ -65,8 +133,9 @@ import SwiperCore, { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 
-SwiperCore.use([Autoplay, Pagination]);
+import dayjs from "dayjs";
 
+SwiperCore.use([Autoplay, Pagination]);
 let swiper_options = reactive({
   modules: [Pagination],
   autoplay: {
@@ -77,7 +146,7 @@ let swiper_options = reactive({
   loop: true,
   slidesPerView: "auto", //解决最后一张切换到第一张中间的空白
   centeredSlides: true, //设置slide居中
-  spaceBetween: 0,
+  spaceBetween: 10,
   pagination: {
     clickable: true,
     renderBullet: function (index, className) {
@@ -90,21 +159,29 @@ const { proxy } = getCurrentInstance();
 
 const state = reactive({
   newsCats: [],
+  heroCats: [],
 });
 
 async function fetchNewsCats() {
   let res = await proxy.$http.get("/news/list");
-  // console.log("newsCats:",res);
+  console.log("newsCats:", res);
   state.newsCats = res.data;
+}
+
+async function fetchHeroCats() {
+  let res = await proxy.$http.get("/heroes/list");
+  console.log("heroCats:", res);
+  state.heroCats = res.data;
 }
 
 onMounted(() => {
   fetchNewsCats();
+  fetchHeroCats();
 });
 </script>
 
 <style lang="scss">
-@import "../assets/sass/variables";
+@import "@/assets/sass/variables";
 
 .swiper-container {
   .swiper-pagination {
