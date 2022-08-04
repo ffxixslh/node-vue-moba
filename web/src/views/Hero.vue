@@ -381,7 +381,6 @@ const fakeDatas = Array.from({ length: 6 }).fill(fakeData);
 console.log(fakeDatas);
 onMounted(() => {
   fetchHero();
-  viewChange(1);
 });
 </script>
 

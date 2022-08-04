@@ -3,7 +3,8 @@ import router from './router.js'
 import { ElMessage } from "element-plus";
 
 const http = axios.create({
-  baseURL: "http://localhost:3000/admin/api",
+  baseURL: import.meta.env.VITE_API_URL || "/admin/api",
+  // baseURL: "http://localhost:3000/admin/api",
 });
 
 http.interceptors.request.use(

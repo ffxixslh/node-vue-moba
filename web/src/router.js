@@ -28,7 +28,7 @@ const routes = [
 ];
 
 const router = new createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
 });
 

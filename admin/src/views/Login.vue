@@ -19,19 +19,23 @@
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus';
 const { proxy } = getCurrentInstance();
 
 const labelPosition = ref("top")
 
 const state = reactive({
-  model: {},
+  model: {
+    username: "",
+    password: ""
+  },
 })
 
 async function login() {
   const res = await proxy.$http.post('login', state.model)
   localStorage.setItem('token', res.data.token);
+  localStorage.setItem('username', state.model.username);
   proxy.$router.push('/');
   ElMessage.success('登录成功');
 }

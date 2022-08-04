@@ -69,13 +69,11 @@
             </el-icon>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
+                <el-dropdown-item @click="adminLogout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <span>Tom</span>
+          <span>你好，{{username}}</span>
         </div>
       </el-header>
       <el-main>
@@ -88,11 +86,34 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Menu, Message, Setting } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 // setup 中用 useRoute 获取路由地址
+// 可以用 useRouter 获取路由对象
 const route = useRoute();
+const router = useRouter();
+
+const username = localStorage.getItem("username");
+
+// 退出登录
+const adminLogout = () => {
+  ElMessageBox.confirm("确定退出登录吗？", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      router.push("/login");
+      ElMessage.success("退出成功！");
+    })
+    .catch(() => {
+      ElMessage.info("取消退出！");
+    });
+};
 </script>
 
 <style scoped>

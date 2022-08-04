@@ -15,3 +15,4 @@ app.config.globalProperties.$http = http;
 app.config.globalProperties.$router = router;
 app.use(ElementPlus).use(router);
 app.mount("#app");
+console.log(import.meta.env);
