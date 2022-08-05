@@ -19,7 +19,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     esbuild: {
-      // pure: ["console.log"],
+      pure: ["console.log"],
     },
     build: {
       minify: true,
