@@ -2,10 +2,10 @@
   <div class="card bg-white mt-3 px-3">
     <div
       class="card-header d-flex py-3 ai-center"
-      :class="{ 'border-bottom': !props.plain }"
+      :class="{ 'border-bottom': props.plain }"
     >
       <span class="iconfont" :class="`icon-${props.icon}`"></span>
-      <div class="fs-xl flex-1 ml-2" :class="{ 'fw-bold': plain }">
+      <div class="fs-xl flex-1 ml-2" :class="{ 'fw-bold': props.plain }">
         {{ props.title }}
       </div>
       <router-link

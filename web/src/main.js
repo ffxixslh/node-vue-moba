@@ -9,7 +9,7 @@ import ListCard from "@/components/ListCard.vue";
 
 const app = createApp(App);
 app.config.globalProperties.$http = axios.create({
-  baseURL: "http://localhost:3000/web/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 app.component("m-card", Card);

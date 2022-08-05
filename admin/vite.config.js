@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
@@ -6,22 +6,19 @@ import path from "path";
 export default defineConfig(({ command, mode }) => {
   console.log("mode:", mode);
   console.log("cwd:", process.cwd());
+  const env = loadEnv(mode, process.cwd());
+  console.log("env:", env);
   return {
     plugins: [vue()],
     // 不同环境的公共路径配置
     base: command === "build" ? "/admin/" : "/",
-    define: {
-      "process.env": {
-        NODE_ENV: command === "build" ? "production" : "development",
-      },
-    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
       },
     },
     esbuild: {
-      // pure: ["console.log"],
+      pure: ["console.log"],
     },
     build: {
       minify: true,

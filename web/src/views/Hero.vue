@@ -1,5 +1,5 @@
 <template>
-  <div class="page-hero" v-if="state.model">
+  <div class="page-hero" v-if="state.model.name">
     <div
       class="topbar bg-dark-1 text-white px-4 py-2 d-flex"
       style="position: sticky; z-index: 10; top: 0; left: 0; right: 0"
